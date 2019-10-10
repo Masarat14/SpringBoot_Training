@@ -4,9 +4,17 @@
         xsi:schemaLocation="
                 http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd">
-                
-<bean id= "student" class= "com.DependencyInjection.Student">
+               
+ <bean id= "student" class= "com.DependencyInjection.Student">
 <property name= "studentName" value="Masarat" />
-
+<property name= "id" value ="37" />
 </bean>
-</beans>
+
+<bean id= "student1" class= "com.DependencyInjection.Student">
+<property name= "studentName" value="John" />
+<property name= "id" value ="38" />
+</bean>
+</beans> 
+
+
+ 
