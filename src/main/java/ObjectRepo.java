@@ -2,7 +2,9 @@ package SeleniumTraining;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,10 +14,10 @@ public class ObjectRepo {
 	
 	 static WebDriver driver;
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) throws IOException, InterruptedException  {
 	
 		Properties props = new Properties();
-		FileInputStream ip= new FileInputStream("D:/Selenium_Training/SeleniumTraining/src/SeleniumTraining/config.properties");
+		FileInputStream ip= new FileInputStream("D:\\Selenium_Training\\SeleniumTraining\\src\\SeleniumTraining\\config.properties");
 		props.load(ip);
 		System.out.println(props.getProperty("name"));
 		System.out.println(props.getProperty("age"));
@@ -35,13 +37,24 @@ public class ObjectRepo {
 				driver= new ChromeDriver();
 			}
 		driver.get(url);
-		driver.findElement(By.xpath(props.getProperty("Gmail_link")));
-		driver.findElement(By.xpath(props.getProperty("Signin_link")));
-		driver.findElement(By.xpath(props.getProperty("Email_xpath")));
-		driver.findElement(By.xpath(props.getProperty("Next_button")));
-		driver.findElement(By.xpath(props.getProperty("Username_xpath")));
-		driver.findElement(By.id(props.getProperty("Password_id")));
+		//driver.findElement(By.xpath(props.getProperty("Gmail_link")));
+		driver.findElement(By.linkText(props.getProperty("Gmail_link"))).click();
+		driver.findElement(By.linkText(props.getProperty("Signin_link"))).click();
+		Thread.sleep(4000);
+		Set <String> handler =driver.getWindowHandles();
+		Iterator<String> it = handler.iterator();
+		String ParentId=it.next();
+		String ChildId=it.next();
+		driver.switchTo().window(ChildId);
 		
+		driver.findElement(By.xpath(props.getProperty("Email_xpath"))).sendKeys(props.getProperty("Email"));
+		driver.findElement(By.xpath(props.getProperty("Next_button"))).click();
+		
+		Thread.sleep(4000);
+		driver.findElement(By.xpath(props.getProperty("Username_xpath"))).sendKeys(props.getProperty("Username"));
+		driver.findElement(By.id(props.getProperty("Password_id"))).sendKeys(props.getProperty("Password"));
+		
+		driver.quit();
 		
 		
 	
@@ -57,4 +70,4 @@ public class ObjectRepo {
 
 	}
 
-}
+
